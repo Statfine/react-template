@@ -1,4 +1,4 @@
-A react template
+A react template Base https://github.com/react-boilerplate/react-boilerplate
 
 # react_template
 
@@ -25,8 +25,6 @@ npm run lint
 # run all tests
 npm test
 ```
-
-Base https://github.com/react-boilerplate/react-boilerplate
 
 # 项目布局
 
