@@ -8,21 +8,89 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { withRouter } from 'react-router';
+import { createStructuredSelector } from 'reselect';
 import { Switch, Route } from 'react-router-dom';
+import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
+import { DAEMON } from 'utils/constants';
 
 import HomePage from 'containers/HomePage/Loadable';
+import Login from 'containers/Login/Loadable';
+import Dashborad from 'containers/Dashboard/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
+
+import saga from './saga';
+import reducer from './reducer';
 
 import GlobalStyle from '../../global-styles';
 
-export default function App() {
-  return (
-    <div>
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route component={NotFoundPage} />
-      </Switch>
-      <GlobalStyle />
-    </div>
-  );
+import {
+  userIsAuthenticatedRedir,
+  userIsNotAuthenticatedRedir,
+} from '../../auth/auth';
+
+/*
+ * 是否登录的判断条件是reducer logined
+ * userIsAuthenticatedRedir 需登录后才能打开的页面,否则重定向到 /login
+ * userIsNotAuthenticatedRedir 未登录才能打开，否则重新向到 ／
+ */
+const LoginPage = userIsNotAuthenticatedRedir(Login);
+const DashboardPage = userIsAuthenticatedRedir(Dashborad);
+
+class App extends React.Component {
+  state = {};
+
+  getChildContext() {
+    return { history: this.props.history };
+  }
+
+  render() {
+    return (
+      <div>
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/dashborad" component={DashboardPage} />
+          <Route component={NotFoundPage} />
+        </Switch>
+        <GlobalStyle />
+      </div>
+    );
+  }
 }
+
+App.childContextTypes = {
+  history: PropTypes.object,
+};
+App.propTypes = {
+  history: PropTypes.object, // eslint-disable-line
+};
+
+const withSaga = injectSaga({ key: 'app', saga, mode: DAEMON });
+const withReducer = injectReducer({ key: 'app', reducer });
+
+const mapStateToProps = createStructuredSelector({});
+
+function mapDispatchToProps(dispatch) { // eslint-disable-line
+  return {};
+}
+
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+export default withRouter(compose(withReducer, withSaga, withConnect)(App));
+
+// export default function App() {
+//   return (
+//     <div>
+//       <Switch>
+//         <Route exact path="/" component={HomePage} />
+//         <Route component={NotFoundPage} />
+//       </Switch>
+//       <GlobalStyle />
+//     </div>
+//   );
+// }
