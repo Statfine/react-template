@@ -42,8 +42,12 @@ docs
 │   │   └── LoadingIndicator                    // 加载组件
 │   ├── containers                              // 页面文件
 │   │   ├── App                                 // 页面入口
-│   │   │   ├── index.js                        // Appstore
-│   │   │   └── types.js                        // 常量
+│   │   │   ├── actions.js                      // 事件 
+│   │   │   ├── constants.js                    // 类型常量 
+│   │   │   ├── index.js                        // 页面 
+│   │   │   ├── reducer.js                      // reducer store 
+│   │   │   ├── saga.js                         // saga异步 
+│   │   │   └── selectors.js                    // 获取reducer中的数据
 │   │   ├── Dashboard                           // 控制面板页面
 │   │   ├── HomePage                            // 首页
 │   │   ├── LanguageProvider                    // 语言修改
