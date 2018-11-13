@@ -8,8 +8,8 @@ import { fromJS } from 'immutable';
 import { DEFAULT_ACTION } from './constants';
 
 export const initialState = fromJS({
-  username: '',
-  password: '',
+  username: 'sj@easub.com',
+  password: '123456',
 });
 
 function loginReducer(state = initialState, action) {

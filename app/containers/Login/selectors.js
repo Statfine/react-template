@@ -18,5 +18,11 @@ const selectLoginDomain = state => state.get('login', initialState);
 const makeSelectLogin = () =>
   createSelector(selectLoginDomain, substate => substate.toJS());
 
+const selectUserName = () =>
+  createSelector(selectLoginDomain, authState => authState.get('username'));
+
+const selectPassword = () =>
+  createSelector(selectLoginDomain, authState => authState.get('password'));
+
 export default makeSelectLogin;
-export { selectLoginDomain };
+export { selectLoginDomain, selectUserName, selectPassword };

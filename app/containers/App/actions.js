@@ -15,7 +15,7 @@
  *    }
  */
 
-import { LOGIN_SUCCESS } from './constants';
+import { LOGIN_SUCCESS, CHANGE_PROMPT_INFO } from './constants';
 
 /**
  * Changes the input field of the form
@@ -27,6 +27,13 @@ import { LOGIN_SUCCESS } from './constants';
 export function changeLogined(payload) {
   return {
     type: LOGIN_SUCCESS,
+    payload,
+  };
+}
+
+export function changePromptInfo(payload) {
+  return {
+    type: CHANGE_PROMPT_INFO,
     payload,
   };
 }

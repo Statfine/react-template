@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
@@ -16,20 +16,24 @@ import makeSelectLogin from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
+import { loginAction } from './actions';
+
 /* eslint-disable react/prefer-stateless-function */
 export class Login extends React.PureComponent {
   render() {
+    const { onAuthLogin } = this.props;
     return (
       <div>
-        Login
+        LoginPage
+        <div onClick={onAuthLogin}>Login</div>
       </div>
     );
   }
 }
 
-// Login.propTypes = {
-//   dispatch: PropTypes.func.isRequired,
-// };
+Login.propTypes = {
+  onAuthLogin: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = createStructuredSelector({
   login: makeSelectLogin(),
@@ -37,7 +41,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    onAuthLogin: () => dispatch(loginAction()),
   };
 }
 

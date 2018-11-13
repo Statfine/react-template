@@ -53,8 +53,8 @@ class App extends React.Component {
       <div>
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/dashborad" component={DashboardPage} />
+          <Route path="/login" component={LoginPage} />
+          <Route path="/dashborad" component={DashboardPage} />
           <Route component={NotFoundPage} />
         </Switch>
         <GlobalStyle />

@@ -18,6 +18,7 @@ import 'sanitize.css/sanitize.css';
 
 // Import root app
 import App from 'containers/App';
+import { requestInjectStore } from 'utils/request';
 
 // Import Language Provider
 import LanguageProvider from 'containers/LanguageProvider';
@@ -36,6 +37,7 @@ import { translationMessages } from './i18n';
 // Create redux store with history
 const initialState = {};
 const store = configureStore(initialState, history);
+requestInjectStore(store);
 const MOUNT_NODE = document.getElementById('app');
 
 const render = messages => {

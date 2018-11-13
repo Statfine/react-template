@@ -37,6 +37,8 @@ docs
 ├── app                                         // 源码目录
 │   ├── auth                                    // 用户验证
 │   │   └── auth.js                             
+│   ├── common                                  // 项目常量
+│   │   └── constants.js                        // （API_BASE）     
 │   ├── components                              // 组件文件
 │   │   ├── ...                                 
 │   │   └── LoadingIndicator                    // 加载组件
@@ -60,6 +62,10 @@ docs
 │   │   └── ...                                 
 │   ├── translation                             // 语言文件
 │   │   └── en.json                             // 英文配置
+│   ├── utility                                 // 工具文件
+│   │   ├── camel                               // 驼峰下划线命名转换
+│   │   ├── ...                               
+│   │   └── localStorageCookie.js               // localStorage和Cookie 操作类        
 │   ├── utils                                   // 项目工具文件
 │   │   ├── tests                               // 测试文件
 │   │   ├── checkStore                          
@@ -68,6 +74,7 @@ docs
 │   │   ├── injectReducer.js                    // reducer注入 
 │   │   ├── injectSaga.js                       // Saga注入
 │   │   ├── reducerInjectors.js                               
+│   │   ├── request.js                          // 全局请求     
 │   │   └── sagaInjectors.js                           
 │   ├── app.js                                  // 程序入口文件，加载资源
 │   ├── configureStore                          // Store
@@ -105,6 +112,8 @@ docs
 
 ``` bash
 # https://github.com/mjrussell/redux-auth-wrapper  用户验证
+# https://github.com/lodash/lodash  工具库
+# https://github.com/pvorb/node-sha1  密码加密
 
 ```
 
