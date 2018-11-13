@@ -26,11 +26,14 @@ npm run lint
 npm test
 ```
 
+## 代码文档
+docs
+
+
 # 项目布局
 
 ```
 .
-├── build                                       // 打包文件
 ├── app                                         // 源码目录
 │   ├── auth                                    // 用户验证
 │   │   └── auth.js                             
@@ -56,7 +59,7 @@ npm test
 │   ├── utils                                   // 项目工具文件
 │   │   ├── tests                               // 测试文件
 │   │   ├── checkStore                          
-│   │   ├── constants                           // 注入方式常量                
+│   │   ├── constants                   // 注入方式常量 （RESTART_ON_REMOUNT， DAEMON， ONCE_TILL_UNMOUNT） 
 │   │   ├── history                            
 │   │   ├── injectReducer.js                    // reducer注入 
 │   │   ├── injectSaga.js                       // Saga注入
@@ -68,13 +71,24 @@ npm test
 │   ├── i18n.js                                 // 语言
 │   ├── index.html                              // 入口html文件
 │   └── reducers                                // 初始reducer
-├── index.html                                  // 入口html文件
-├── internal                                    // 内部配置
+├── build                                       // 打包文件
+├── docs                                        // 项目文档
+│   └── js                                      // JS文档说明示范
+│   │   ├── async-components.md                 // loadable-components 说明示范
+│   │   ├── i18n.md                             // 国际化设置 说明示范    
+│   │   ├── immutablejs.md                      // immutableJs  说明示范 (reducer)
+│   │   ├── README.md                           
+│   │   ├── redux-saga.md                       // redux-saga 说明示范   saga注入  
+│   │   ├── redux.md                            // redux 说明示范    reducer注入  
+│   │   ├── remove.md  
+│   │   ├── reselect.md                         // reselect 说明示范
+│   │   └── routing      // connected-react-router 说明示范 (react-router-redux to connected-react-router)
+├── internal                                    // 内部配置文件
 │   ├── generators                              // 模板  （npm run generate）                    
 │   ├── mocks                              
 │   ├── scripts                                 // 脚本
 │   ├── testing           
-│   └── webpack                                 // 配置
+│   └── webpack                                 // 配置文件
 │   │   ├── webpack.base.babel.js               // 基本配置
 │   │   ├── webpack.dev.babel.js                // 测试配置                          
 │   │   └── webpack.pro.babel.js                // 正式配置
