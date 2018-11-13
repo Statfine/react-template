@@ -54,8 +54,8 @@ class HomePage extends React.PureComponent {
         <h1>HomePage</h1>
         <Content>
           <P>1.页面入口app通过auth判断哪些页面需要用户验证可以登录，哪些不能</P>
-          <P1>1.1 userIsAuthenticatedRedir 需要登录，不然跳转 /</P1>
-          <P1>1.2 userIsNotAuthenticatedRedir 需要未登录，不然跳转 / (登录页面必须未登录，不然打开重定向)</P1>
+          <P1>1.1 userIsAuthenticatedRedir 需要登录，不然跳转 / (dashborad页面必须登录，则重定向会/)</P1>
+          <P1>1.2 userIsNotAuthenticatedRedir 需要未登录，不然跳转 / (登录页面必须未登录，则重定向会/)</P1>
           <P>2.App中action和saga为全局，需注意saga中的用户获取和Token刷新逻辑</P>
           <P1>2.1 fetchUserInfoWatcher内部判断是否获取用户信息</P1>
           <P1>2.2 tokenSagaWatcher 判断是否刷新token</P1>
