@@ -6,17 +6,17 @@ export function setLocal(key, val) {
   const setting = arguments[0]; // eslint-disable-line
   if (Object.prototype.toString.call(setting).slice(8, -1) === 'Object') {
     for (const i in setting) { // eslint-disable-line
-      localStorage.setItem(i, JSON.stringify(setting[i]));
+      localStorage.setItem(i, setting[i]);
     }
   } else {
-    localStorage.setItem(key, JSON.stringify(val));
+    localStorage.setItem(key, val);
   }
 }
 
 // 获取localStorage
 export function getLocal(key) {
   try {
-    if (key && localStorage.getItem(key) && localStorage.getItem(key) !== 'undefined') return JSON.parse(localStorage.getItem(key));
+    if (key && localStorage.getItem(key) && localStorage.getItem(key) !== 'undefined') return localStorage.getItem(key)
     return null;
   } catch (error) {
     return null;

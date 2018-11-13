@@ -11,3 +11,8 @@
 export const LOGIN_CHANGE = 'app/App/LOGIN_CHANGE';
 export const LOGIN_OUT = 'app/App/LOGIN_OUT';
 export const CHANGE_PROMPT_INFO = 'app/App/CHANGE_PROMPT_INFO';
+
+export const FETCH_USERINFO = 'app/App/FETCH_USERINFO';
+export const FETCH_USERINFO_SUC = 'app/App/FETCH_USERINFO_SUC';
+export const FETCH_USERINFO_ERROR = 'app/App/FETCH_USERINFO_ERROR';
+

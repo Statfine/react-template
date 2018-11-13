@@ -15,7 +15,8 @@
  *    }
  */
 
-import { LOGIN_CHANGE, LOGIN_OUT, CHANGE_PROMPT_INFO } from './constants';
+import { LOGIN_CHANGE, LOGIN_OUT, FETCH_USERINFO_SUC,
+  CHANGE_PROMPT_INFO } from './constants';
 
 /**
  * Changes the input field of the form
@@ -41,6 +42,13 @@ export function loginOut(payload) {
 export function changePromptInfo(payload) {
   return {
     type: CHANGE_PROMPT_INFO,
+    payload,
+  };
+}
+
+export function fetchUserInfo(payload) {
+  return {
+    type: FETCH_USERINFO_SUC,
     payload,
   };
 }

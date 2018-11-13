@@ -16,21 +16,27 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Helmet } from 'react-helmet';
 
-import { makeSelectLogined } from '../App/selectors';
+import { makeSelectLogined, makeSelectUserInfo } from '../App/selectors';
+import { loginOut } from '../App/actions';
 
 /* eslint-disable react/prefer-stateless-function */
 class HomePage extends React.PureComponent {
   handleJumpLogin = () => {
     const { logined, history } = this.props;
     if (!logined) history.push('/login');
-  }
+  };
 
   render() {
-    const { logined } = this.props; 
+    const { logined, actionLoginOut, userInfo } = this.props;
     return (
       <div>
-        <Helmet><title>首页</title></Helmet>
-        <div onClick={this.handleJumpLogin}>{logined ? '已登录' : '去登陆'}</div>
+        <Helmet>
+          <title>首页</title>
+        </Helmet>
+        {logined ?
+          (<div onClick={actionLoginOut}>退出用户:{userInfo.user.clip_id}</div>) :
+          (<div onClick={this.handleJumpLogin}>去登陆</div>)
+        }
         <h1>HomePage</h1>
       </div>
     );
@@ -38,16 +44,22 @@ class HomePage extends React.PureComponent {
 }
 
 HomePage.propTypes = {
-  logined: PropTypes.bool,
   history: PropTypes.object,
+  logined: PropTypes.bool,
+  actionLoginOut: PropTypes.func,
+  userInfo: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
   logined: makeSelectLogined(),
+  userInfo: makeSelectUserInfo(),
 });
 
-function mapDispatchToProps(dispatch) { // eslint-disable-line
-  return {};
+function mapDispatchToProps(dispatch) {
+  // eslint-disable-line
+  return {
+    actionLoginOut: () => dispatch(loginOut()),
+  };
 }
 
 const withConnect = connect(

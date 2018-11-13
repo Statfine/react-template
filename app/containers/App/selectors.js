@@ -13,4 +13,9 @@ const makeSelectLogined = () =>
     routerState.get('logined'),
   );
 
-export { makeSelectLocation, makeSelectLogined };
+const makeSelectUserInfo = () =>
+  createSelector(selectAppRouter, routerState =>
+    routerState.get('userInfo').toJS(),
+  );
+
+export { makeSelectLocation, makeSelectLogined, makeSelectUserInfo };
