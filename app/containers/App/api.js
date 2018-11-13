@@ -4,8 +4,25 @@
 
 import { API_BASE } from 'common/constants';
 import request from 'utils/request';
+import { getLocal } from 'utility/localStorageCookie';
 
 const api = {
+  // token 刷新
+  refreshToken() {
+    const options = {
+      method: 'POST',
+      body: JSON.stringify({
+        refresh_token: getLocal('refresh_token'),
+      }),
+    };
+
+    return request(`${API_BASE}/auth/refresh`, options)
+      .then((data) => data.data)
+      .catch(() => {
+        throw new Error('用户已过有效期');
+      });
+  },
+
   // 用户退出
   userLogout() {
     return request(`${API_BASE}/auth/logout`, {

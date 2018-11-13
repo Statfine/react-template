@@ -36,7 +36,7 @@ import {
 
 /*
  * 是否登录的判断条件是reducer logined
- * userIsAuthenticatedRedir 需登录后才能打开的页面,否则重定向到 /login
+ * userIsAuthenticatedRedir 需登录后才能打开的页面,否则重定向到 /
  * userIsNotAuthenticatedRedir 未登录才能打开，否则重新向到 ／
  */
 const LoginPage = userIsNotAuthenticatedRedir(Login);

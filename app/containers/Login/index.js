@@ -27,7 +27,7 @@ export class Login extends React.PureComponent {
       <div>
         <Helmet><title>登录</title></Helmet>
         LoginPage
-        <div onClick={onAuthLogin}>Login</div>
+        <div onClick={onAuthLogin}>点击登录</div>
       </div>
     );
   }

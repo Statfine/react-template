@@ -1,6 +1,7 @@
 import 'whatwg-fetch';
 import _ from 'lodash';
 import { changePromptInfo } from 'containers/App/actions';
+import { getLocal, setLocal } from 'utility/localStorageCookie';
 
 // app.js 注入store
 let globalStore;
@@ -23,16 +24,12 @@ function parseJSON(response) {
 }
 
 function parseData(data) {
-  // token失效时页面刷新
   if (data.code === 9001) {
-    if (localStorage.refreshing_token === '1') {
-      localStorage.refreshing_token = 2;
-      return false;
-    }
-    localStorage.refreshing_token = 0;
-    localStorage.expires_in = Date.now();
-    localStorage.access_token = '';
-    if (!window.localStorage.refresh_token) {
+    // token失效时页面刷新 getLocal('refreshing_token')为1时表示正在执行刷新token
+    if (getLocal('refreshing_token') === 1) return false;
+    setLocal('expires_in', Date.now());
+    setLocal('access_token', '');
+    if (!getLocal('refresh_token')) {
       window.location.href = '/';
       return false;
     }

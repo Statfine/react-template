@@ -15,9 +15,23 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Helmet } from 'react-helmet';
+import styled from 'styled-components';
 
 import { makeSelectLogined, makeSelectUserInfo } from '../App/selectors';
 import { loginOut } from '../App/actions';
+
+const Content = styled.div`
+  padding: 40px;
+  background: #e3e3e3;
+`;
+const P = styled.p`
+  font-size: 16px;
+`;
+const P1 = styled.p`
+  font-size: 14px;
+  margin-left: 40px;
+  color: #666;
+`;
 
 /* eslint-disable react/prefer-stateless-function */
 class HomePage extends React.PureComponent {
@@ -34,10 +48,18 @@ class HomePage extends React.PureComponent {
           <title>首页</title>
         </Helmet>
         {logined ?
-          (<div onClick={actionLoginOut}>退出用户:{userInfo.user.clip_id}</div>) :
-          (<div onClick={this.handleJumpLogin}>去登陆</div>)
+          (<div onClick={actionLoginOut}>点击退出用户:{userInfo.user.clip_id}</div>) :
+          (<div onClick={this.handleJumpLogin}>点击去登陆</div>)
         }
         <h1>HomePage</h1>
+        <Content>
+          <P>1.页面入口app通过auth判断哪些页面需要用户验证可以登录，哪些不能</P>
+          <P1>1.1 userIsAuthenticatedRedir 需要登录，不然跳转 /</P1>
+          <P1>1.2 userIsNotAuthenticatedRedir 需要未登录，不然跳转 / (登录页面必须未登录，不然打开重定向)</P1>
+          <P>2.App中action和saga为全局，需注意saga中的用户获取和Token刷新逻辑</P>
+          <P1>2.1 fetchUserInfoWatcher内部判断是否获取用户信息</P1>
+          <P1>2.2 tokenSagaWatcher 判断是否刷新token</P1>
+        </Content>
       </div>
     );
   }
