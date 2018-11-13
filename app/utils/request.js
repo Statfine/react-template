@@ -81,7 +81,13 @@ export function requestNoSnack(url, options) {
     .then(parseData);
 }
 
-// noNotice 不做错误提示
+/**
+ * 
+ * @param {*} url 
+ * @param {*} options 
+ *   noNotice 不做错误提示
+ * globalStore.dispatch 失败异常发送方法action
+ */
 export default function request(url, options) {
   return requestNoSnack(url, options).catch((error) => {
     const msg = error.data ? error.message ? error.message : error : '网络异常';
@@ -129,12 +135,3 @@ function mapKeysDeep(obj, func) {
   return obj;
 }
 /* eslint-enable  */
-
-export function camelToSnake(obj) {
-  return mapKeysDeep(obj, _.snakeCase);
-}
-
-// 下划线转驼峰
-export function camelCase(obj) {
-  return mapKeysDeep(obj, _.camelCase);
-}

@@ -22,6 +22,7 @@ import HomePage from 'containers/HomePage/Loadable';
 import Login from 'containers/Login/Loadable';
 import Dashborad from 'containers/Dashboard/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import LoadingIndicator from 'components/LoadingIndicator';
 
 import saga from './saga';
 import reducer from './reducer';
@@ -55,6 +56,7 @@ class App extends React.Component {
           <Route exact path="/" component={HomePage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/dashborad" component={DashboardPage} />
+          <Route path='/loading' component={LoadingIndicator} />
           <Route component={NotFoundPage} />
         </Switch>
         <GlobalStyle />

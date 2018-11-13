@@ -13,7 +13,7 @@ npm install
 # serve with hot reload at localhost:3000
 npm start
 
-# build page template
+# creat page template
 npm run generate
 
 # build for production with minification
