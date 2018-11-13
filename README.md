@@ -44,7 +44,8 @@ docs
 │   │   └── LoadingIndicator                    // 加载组件
 │   ├── containers                              // 页面文件
 │   │   ├── App                                 // 页面入口
-│   │   │   ├── actions.js                      // 事件 
+│   │   │   ├── actions.js                      // 全局事件 
+│   │   │   ├── api.js                          // 全局API
 │   │   │   ├── constants.js                    // 类型常量 
 │   │   │   ├── index.js                        // 页面 
 │   │   │   ├── reducer.js                      // reducer store 
@@ -114,6 +115,7 @@ docs
 # https://github.com/mjrussell/redux-auth-wrapper  用户验证
 # https://github.com/lodash/lodash  工具库
 # https://github.com/pvorb/node-sha1  密码加密
+# https://github.com/nfl/react-helmet  标题修改
 
 ```
 

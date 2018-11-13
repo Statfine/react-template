@@ -15,7 +15,7 @@
  *    }
  */
 
-import { LOGIN_SUCCESS, CHANGE_PROMPT_INFO } from './constants';
+import { LOGIN_CHANGE, LOGIN_OUT, CHANGE_PROMPT_INFO } from './constants';
 
 /**
  * Changes the input field of the form
@@ -26,7 +26,14 @@ import { LOGIN_SUCCESS, CHANGE_PROMPT_INFO } from './constants';
  */
 export function changeLogined(payload) {
   return {
-    type: LOGIN_SUCCESS,
+    type: LOGIN_CHANGE,
+    payload,
+  };
+}
+
+export function loginOut(payload) {
+  return {
+    type: LOGIN_OUT,
     payload,
   };
 }

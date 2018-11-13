@@ -18,7 +18,7 @@ export const userIsAuthenticated = connectedAuthWrapper(userIsAuthenticatedDefau
 export const userIsAuthenticatedRedir = connectedRouterRedirect({
   ...userIsAuthenticatedDefaults,
   AuthenticatingComponent: Loading,
-  redirectPath: '/login',
+  redirectPath: '/',
 })
 
 export const userIsAdminRedir = connectedRouterRedirect({

@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { Helmet } from 'react-helmet';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -24,6 +25,7 @@ export class Login extends React.PureComponent {
     const { onAuthLogin } = this.props;
     return (
       <div>
+        <Helmet><title>登录</title></Helmet>
         LoginPage
         <div onClick={onAuthLogin}>Login</div>
       </div>

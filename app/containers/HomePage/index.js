@@ -10,14 +10,49 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
+import { Helmet } from 'react-helmet';
+
+import { makeSelectLogined } from '../App/selectors';
 
 /* eslint-disable react/prefer-stateless-function */
-export default class HomePage extends React.PureComponent {
+class HomePage extends React.PureComponent {
+  handleJumpLogin = () => {
+    const { logined, history } = this.props;
+    if (!logined) history.push('/login');
+  }
+
   render() {
+    const { logined } = this.props; 
     return (
-      <h1>
-        HomePage
-      </h1>
+      <div>
+        <Helmet><title>首页</title></Helmet>
+        <div onClick={this.handleJumpLogin}>{logined ? '已登录' : '去登陆'}</div>
+        <h1>HomePage</h1>
+      </div>
     );
   }
 }
+
+HomePage.propTypes = {
+  logined: PropTypes.bool,
+  history: PropTypes.object,
+};
+
+const mapStateToProps = createStructuredSelector({
+  logined: makeSelectLogined(),
+});
+
+function mapDispatchToProps(dispatch) { // eslint-disable-line
+  return {};
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(withConnect)(HomePage);

@@ -8,5 +8,6 @@
  * Follow this format:
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
-export const LOGIN_SUCCESS = 'app/App/LOGIN_SUCCESS';
+export const LOGIN_CHANGE = 'app/App/LOGIN_CHANGE';
+export const LOGIN_OUT = 'app/App/LOGIN_OUT';
 export const CHANGE_PROMPT_INFO = 'app/App/CHANGE_PROMPT_INFO';
