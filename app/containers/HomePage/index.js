@@ -35,6 +35,15 @@ const P1 = styled.p`
 
 /* eslint-disable react/prefer-stateless-function */
 class HomePage extends React.PureComponent {
+
+  componentWillMount() {
+    console.log('componentWillMount');
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('componentWillReceiveProps', nextProps);
+  }
+
   handleJumpLogin = () => {
     const { logined, history } = this.props;
     if (!logined) history.push('/login');
