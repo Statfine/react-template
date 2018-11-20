@@ -16,6 +16,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
+import { DatePicker, Button } from 'antd';
 
 import { makeSelectLogined, makeSelectUserInfo } from '../App/selectors';
 import { loginOut } from '../App/actions';
@@ -35,6 +36,9 @@ const P1 = styled.p`
 
 /* eslint-disable react/prefer-stateless-function */
 class HomePage extends React.PureComponent {
+  state = {
+    date: '',
+  }
 
   componentWillMount() {
     console.log('componentWillMount');
@@ -48,6 +52,10 @@ class HomePage extends React.PureComponent {
     const { logined, history } = this.props;
     if (!logined) history.push('/login');
   };
+
+  handleChange(date) {
+    this.setState({ date });
+  }
 
   render() {
     const { logined, actionLoginOut, userInfo } = this.props;
@@ -69,6 +77,8 @@ class HomePage extends React.PureComponent {
           <P1>2.1 fetchUserInfoWatcher内部判断是否获取用户信息</P1>
           <P1>2.2 tokenSagaWatcher 判断是否刷新token</P1>
         </Content>
+        <div style={{ marginLeft: '300px' }}><DatePicker onChange={value => this.handleChange(value)} /></div>
+        <Button type="primary">Primary</Button>
       </div>
     );
   }

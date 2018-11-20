@@ -4,6 +4,9 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const fs = require('fs');
+
+const paletteLess = fs.readFileSync(path.join(__dirname, './../../app/antd_theme.json'), 'utf8');
 
 // Remove this line once the following warning goes away (it was meant for webpack loader authors not users):
 // 'DeprecationWarning: loaderUtils.parseQuery() received a non-string value which can be problematic,
@@ -46,6 +49,20 @@ module.exports = options => ({
         test: /\.css$/,
         include: /node_modules/,
         use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.less$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'less-loader',
+            options: {
+              modifyVars: JSON.parse(paletteLess),
+              javascriptEnabled: true,
+            },
+          },
+        ],
       },
       {
         test: /\.(eot|otf|ttf|woff|woff2)$/,
@@ -124,6 +141,7 @@ module.exports = options => ({
     }),
   ]),
   resolve: {
+    alias: { moment$: 'moment/moment.js' },
     modules: ['node_modules', 'app'],
     extensions: ['.js', '.jsx', '.react.js'],
     mainFields: ['browser', 'jsnext:main', 'main'],

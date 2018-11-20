@@ -116,6 +116,9 @@ docs
 # https://github.com/lodash/lodash  工具库
 # https://github.com/pvorb/node-sha1  密码加密
 # https://github.com/nfl/react-helmet  标题修改
+# https://github.com/ant-design/ant-design 主题样式
+# https://github.com/moment/moment 时间
+# less less-loader  less加载
 
 ```
 
