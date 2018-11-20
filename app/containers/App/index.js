@@ -21,6 +21,7 @@ import { DAEMON } from 'utils/constants';
 import HomePage from 'containers/HomePage/Loadable';
 import Login from 'containers/Login/Loadable';
 import Dashborad from 'containers/Dashboard/Loadable';
+import DocPage from 'containers/DeveloperDoc/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import LoadingIndicator from 'components/LoadingIndicator';
 
@@ -41,7 +42,10 @@ import {
  */
 const LoginPage = userIsNotAuthenticatedRedir(Login);
 const DashboardPage = userIsAuthenticatedRedir(Dashborad);
-
+const styleApp = {
+  height: '100vh',
+  width: '100vw',
+}
 class App extends React.Component {
   state = {};
 
@@ -51,11 +55,12 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={styleApp}>
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/login" component={LoginPage} />
-          <Route path="/dashborad" component={DashboardPage} />
+          <Route path="/dashboard" component={DashboardPage} />
+          <Route path="/doc" component={DocPage} />
           <Route path='/loading' component={LoadingIndicator} />
           <Route component={NotFoundPage} />
         </Switch>

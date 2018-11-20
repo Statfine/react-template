@@ -1,11 +1,10 @@
 import React from 'react';
-
+import { Spin } from 'antd';
 import Wrapper from './Wrapper';
-import Circle from './Circle';
 
 const LoadingIndicator = () => (
   <Wrapper>
-    <Circle />
+    <Spin size="large" />
   </Wrapper>
 );
 

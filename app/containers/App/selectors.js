@@ -18,4 +18,9 @@ const makeSelectUserInfo = () =>
     routerState.get('userInfo').toJS(),
   );
 
-export { makeSelectLocation, makeSelectLogined, makeSelectUserInfo };
+const makeSelectUserBase = () =>
+  createSelector(selectAppRouter, routerState =>
+    routerState.get('userInfo').get('user').toJS(),
+  );
+
+export { makeSelectLocation, makeSelectLogined, makeSelectUserBase, makeSelectUserInfo };

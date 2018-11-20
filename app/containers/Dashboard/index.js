@@ -11,6 +11,9 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
+import Header from 'components/Header';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import { Layout, Menu, Icon } from 'antd';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -18,114 +21,109 @@ import makeSelectDashboard from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
-import { loginOut } from '../App/actions';
+const { SubMenu } = Menu;
+const { Content, Sider } = Layout;
 
-const Content = styled.div`
-  padding: 40px;
-  background: #e3e3e3;
-`;
-const P = styled.p`
-  font-size: 16px;
-`;
-const P1 = styled.p`
-  font-size: 14px;
-  margin-left: 40px;
-  color: #666;
-`;
-const INPUT = styled.input`
-  font-size: 14px;
-  margin-left: 40px;
-  border: 1px solid #e3e3e3;
-  color: #666;
+const AppWrapper = styled(Layout)`
+  height: 100%;
+  width: 100%;
+  padding-top: 50px;
 `;
 
-const Button = styled.button`
-
+const RightNav = styled(Layout)`
+  padding: 24px;
 `;
 
-// Example HOC
-function withTheme(ThemedComponent) {
-  // function ThemeContextInjector(props) {
-  //   return (
-  //     <ThemeContext.Consumer>
-  //       {value => (
-  //         <ThemedComponent {...props} ref={props.forwardedRef} theme={value} />
-  //       )}
-  //     </ThemeContext.Consumer>
-  //   );
-  // }
-  function ThemeContextInjector(props) {
-    return (<ThemedComponent {...props} ref={props.forwardedRef} />);
-  }
-
-  // Forward refs through to the inner, "themed" component:
-  return React.forwardRef((props, ref) => (
-    <ThemeContextInjector {...props} forwardedRef={ref} />
-  ));
-}
-const ThemedButton = withTheme(Button);
+const LeftNav = styled(Sider)`
+  width: 200;
+  background: #fff;
+  box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.12);
+  z-index: 500;
+  color: #4885ed;
+  display: flex;
+  flex-direction: column;
+  align-content: space-around;
+  margin-bottom: -20px;
+  overflow-y: auto;
+`;
+const Wrapper = styled(Content)`
+  background: #fff;
+  padding: 24;
+  margin: 0;
+  min-height: 280px;
+`;
 
 /* eslint-disable react/prefer-stateless-function */
 export class Dashboard extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.divRef = React.createRef();
-    this.buttonRef = React.createRef();
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
-  UNSAFE_componentWillMount() { // eslint-disable-line
-    console.log('UNSAFE_componentWillMount');
-  }
-
-  componentDidMount() {
-    console.log(this.divRef);
-    this.divRef.current.focus()
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) { // eslint-disable-line
-    console.log('UNSAFE_componentWillReceiveProps', nextProps);
-  }
+  onJump = url => this.props.history.push(url);
 
   render() {
-    const { actionLoginOut } = this.props;
     return (
-      <div>
-        <Helmet><title>控制面板</title></Helmet>
-        <Content>
-          <P>1.ref</P>
-          <P1>1.1 React.createRef()</P1>
-          <P1>1.2 this.divRef.current</P1>
-          <P>2.forwardRef</P>
-          <P1>2.1 React.forwardRef()</P1>
-          <P>3.UNSAFE_</P>
-          <P1>3.1 ADD getDerivedStateFromProps()</P1>
-          <P1>3.2 ADD getSnapshotBeforeUpdate()</P1>
-          <P1>3.3 UNSAFE_componentWillMount</P1>
-          <P1>3.4 UNSAFE_componentWillReceiveProps</P1>
-          <P1>3.5 UNSAFE_componentWillUpdate</P1>
-        </Content>
-        <div onClick={actionLoginOut}>logout</div>
-        {/* <input type="text" ref={this.divRef} /> */}
-        <INPUT type="text" ref={this.divRef} />
-        <ThemedButton ref={this.buttonRef} onClick={actionLoginOut}>ClickME logout</ThemedButton>
-        <div>Dashboard</div>
-      </div>
+      <AppWrapper>
+        <Helmet>
+          <title>控制面板</title>
+        </Helmet>
+        <Header />
+        <Layout>
+          <LeftNav>
+            <Menu
+              mode="inline"
+              defaultSelectedKeys={['1']}
+              defaultOpenKeys={['sub1']}
+              style={{ height: '100%', borderRight: 0 }}
+            >
+              <SubMenu
+                key="sub1"
+                title={<span><Icon type="user" />subnav 1</span>}
+              >
+                <Menu.Item key="1" onClick={() => this.onJump('/dashboard')}>dashboard</Menu.Item>
+                <Menu.Item key="2" onClick={() => this.onJump('/dashboard/one')}>one</Menu.Item>
+                <Menu.Item key="3" onClick={() => this.onJump('/dashboard/two')}>two</Menu.Item>
+                <Menu.Item key="4" onClick={() => this.onJump('/dashboard/three')}>404</Menu.Item>
+              </SubMenu>
+            </Menu>
+          </LeftNav>
+          <RightNav>
+            <Wrapper>
+              <Switch>
+                <Route
+                  exact
+                  path={this.props.match.url}
+                  component={() => <div>home</div>}
+                />
+                <Route
+                  path={`${this.props.match.path}/one`}
+                  component={() => <div>One</div>}
+                />
+                <Route
+                  path={`${this.props.match.path}/two`}
+                  component={() => <div>Two</div>}
+                />
+                <Route render={() => <Redirect to="/404" />} />
+              </Switch>
+            </Wrapper>
+          </RightNav>
+        </Layout>
+      </AppWrapper>
     );
   }
 }
 
 Dashboard.propTypes = {
-  actionLoginOut: PropTypes.func.isRequired,
+  match: PropTypes.object,
+  history: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
   dashboard: makeSelectDashboard(),
 });
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actionLoginOut: () => dispatch(loginOut()),
-  };
+function mapDispatchToProps(dispatch) {  // eslint-disable-line
+  return {};
 }
 
 const withConnect = connect(
