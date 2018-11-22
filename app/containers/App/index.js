@@ -45,6 +45,11 @@ const DashboardPage = userIsAuthenticatedRedir(Dashborad);
 class App extends React.Component {
   state = {};
 
+  /**
+   * 可用context  
+   * 可用withRouter 
+   * 推荐utils/history
+   */
   getChildContext() {
     return { history: this.props.history };
   }
