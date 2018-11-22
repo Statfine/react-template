@@ -5,7 +5,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from "react-router-dom";
 import { createStructuredSelector } from 'reselect';
+import history from 'utils/history';
 import { loginOut } from 'containers/App/actions';
 import {
   makeSelectUserBase,
@@ -18,9 +20,21 @@ import Logo from './logo.png';
 import { HeaderContainer, Part, JumpP, ImgP, Title, LogoImg } from './styled';
 
 class HeaderCom extends PureComponent {
+  state = {
+    historyFlag: 0, // 0用context  1用withRouter 2用utils/history
+  }
+
   handleJump = url => {
+    const { historyFlag } = this.state;
     const { onLogout } = this.props;
-    if (onLogout) this.context.history.push(url);
+    // if (onLogout) this.context.history.push(url);
+    // if (onLogout) this.props.history.push(url);
+    // if (onLogout) history.push(url);
+    if (onLogout) {
+      if (historyFlag === 0) this.context.history.push(url);
+      else if (historyFlag === 1) this.props.history.push(url);
+      else history.push(url);
+    }
     else this.handleLogin();
   };
 
@@ -81,6 +95,7 @@ HeaderCom.propTypes = {
   userInfo: PropTypes.object,
   logined: PropTypes.bool,
   onLogout: PropTypes.func,
+  history: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -99,4 +114,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(HeaderCom);
+)(withRouter(HeaderCom));
