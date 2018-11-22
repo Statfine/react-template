@@ -71,7 +71,7 @@ docs
 │   │   ├── tests                               // 测试文件
 │   │   ├── checkStore                          
 │   │   ├── constants                   // 注入方式常量 （RESTART_ON_REMOUNT， DAEMON， ONCE_TILL_UNMOUNT） 
-│   │   ├── history                            
+│   │   ├── history                             // 全局history
 │   │   ├── injectReducer.js                    // reducer注入 
 │   │   ├── injectSaga.js                       // Saga注入
 │   │   ├── reducerInjectors.js                               
