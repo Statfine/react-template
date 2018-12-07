@@ -119,6 +119,7 @@ docs
 # https://github.com/ant-design/ant-design 主题样式
 # https://github.com/moment/moment 时间
 # less less-loader  less加载
+# axios  上传请求
 
 ```
 
