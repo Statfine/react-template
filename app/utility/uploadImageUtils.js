@@ -30,7 +30,7 @@ export default function uploadCli(
   params,
 ) {
   //  判断文件类型获取文件名
-  const fileName = file.name.substring(0, file.name.lastIndexOf('.'));
+  // const fileName = file.name.substring(0, file.name.lastIndexOf('.'));
   let uploadHeader = {};
   // let fileExtension;
   // let contentType;
@@ -56,7 +56,7 @@ export default function uploadCli(
   });
 
   //  上传文件对象
-  const fileObj = { name: fileName };
+  const fileObj = {};
 
   // 获取上传URL
   function getUploadUrl() {
