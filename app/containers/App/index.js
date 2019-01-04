@@ -21,6 +21,7 @@ import { DAEMON } from 'utils/constants';
 import HomePage from 'containers/HomePage/Loadable';
 import Login from 'containers/Login/Loadable';
 import Dashborad from 'containers/Dashboard/Loadable';
+import AntDashborad from 'containers/AntDashboard/Loadable';
 import DocPage from 'containers/DeveloperDoc/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import LoadingIndicator from 'components/LoadingIndicator';
@@ -60,6 +61,7 @@ class App extends React.Component {
           <Route exact path="/" component={HomePage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/dashboard" component={DashboardPage} />
+          <Route path="/ant" component={AntDashborad} />
           <Route path="/doc" component={DocPage} />
           <Route path='/loading' component={LoadingIndicator} />
           <Route component={NotFoundPage} />
