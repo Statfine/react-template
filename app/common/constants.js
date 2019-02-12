@@ -20,6 +20,6 @@ apiHost = apiHost.indexOf('localhost') !== -1 ? 'http://livebeta.clip.cn' : apiH
 
 export const API_BASE = `${apiHost}/api/v2`;
 
-export const PRODUCTION_ENV = ['production'];
-export const DEVELOPMENT_ENV = 'development';
+export const QA_ENV = ['easubdev', 'easub', 'qa'];
 export const CURRENT_ENV = process.env.NODE_ENV;
+export const CURRENT_QA = process.env.QA_ENV;

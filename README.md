@@ -126,17 +126,27 @@ Elint
 ## 分支
 ``` bash
 # dev-build分支用于不同环境构建
+>  internals/webpack/webpack.base.babel.js    DefinePlugin 添加新增的env即可
+
 >  app/app.js                                 正式环境-添加ServiceWorker进行缓存
-
 >  app/configureStore.js                      开发环境-使用Redux DevTools Extension
-
 >  app/utils/sgaInjectors.js                  正式&开发环境 saga重置
-
->  internals/webpack/webpack.base.babel.js    编译时的设置（无需修改）
-
+>  internals/webpack/webpack.base.babel.js    编译时的设置
 >  server/index.js                            编译-ngrok反向代理
-
 >  server/middlewares/frontendMiddleware.js   编译环境判断
+>  babel.config.js                            production 配置
+>  internals/webpack/webpack.pro.babel.js     正式环境编译 mode nodeEnv 
+```
+```json
+{
+  "process.env": {
+    "NODE_ENV": "JSON.stringify(process.env.NODE_ENV)",
+    "QA_ENV": "JSON.stringify(process.env.QA_ENV)",
+  },
+}
+npm run build
+
+npm run build:qa
 ```
 
 

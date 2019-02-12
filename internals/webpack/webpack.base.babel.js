@@ -120,6 +120,7 @@ module.exports = options => ({
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        QA_ENV: JSON.stringify(process.env.QA_ENV),
       },
     }),
   ]),
