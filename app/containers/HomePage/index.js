@@ -19,6 +19,7 @@ import styled from 'styled-components';
 
 import { makeSelectLogined, makeSelectUserInfo } from '../App/selectors';
 import { loginOut } from '../App/actions';
+import { CURRENT_ENV } from '../../common/constants';
 
 const Content = styled.div`
   padding: 40px;
@@ -56,6 +57,7 @@ class HomePage extends React.PureComponent {
         <Helmet>
           <title>首页</title>
         </Helmet>
+        {CURRENT_ENV}
         {logined ?
           (<div onClick={actionLoginOut}>点击退出用户:{userInfo.user.clip_id}</div>) :
           (<div onClick={this.handleJumpLogin}>点击去登陆</div>)

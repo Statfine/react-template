@@ -4,6 +4,15 @@ A react template Base https://github.com/react-boilerplate/react-boilerplate
 
 > React项目模板
 
+## 当前分支用于开发不同环境构建
+>  app/app.js                                 正式环境-添加ServiceWorker进行缓存
+>  app/configureStore.js                      开发环境-使用Redux DevTools Extension
+>  app/utils/sgaInjectors.js                  正式&开发环境 saga重置
+>  internals/webpack/webpack.base.babel.js    编译时的设置（无需修改）
+>  server/index.js                            编译-ngrok反向代理
+>  server/middlewares/frontendMiddleware.js   编译环境判断
+
+
 ## Build Setup
 
 ``` bash
