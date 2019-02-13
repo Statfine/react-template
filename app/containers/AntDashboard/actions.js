@@ -1,6 +1,6 @@
 /*
  *
- * Dashboard actions
+ * AntDashboard actions
  *
  */
 

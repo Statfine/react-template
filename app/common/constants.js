@@ -16,3 +16,4 @@ apiHost = apiHost.indexOf('localhost') !== -1 ? 'http://livebeta.clip.cn' : apiH
 // apiHost = 'http://livebeta.clip.cn';
 
 export const API_BASE = `${apiHost}/api/v2`;
+export const API_BASE_ENSTAR = `http://enstarte.clip.cn/api`;

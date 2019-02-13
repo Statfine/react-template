@@ -11,6 +11,9 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
+import Header from 'components/Header';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import { Layout, Menu, Icon } from 'antd';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -18,114 +21,226 @@ import makeSelectDashboard from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
-import { loginOut } from '../App/actions';
+const { SubMenu } = Menu;
+const { Content, Sider } = Layout;
 
-const Content = styled.div`
-  padding: 40px;
-  background: #e3e3e3;
-`;
-const P = styled.p`
-  font-size: 16px;
-`;
-const P1 = styled.p`
-  font-size: 14px;
-  margin-left: 40px;
-  color: #666;
-`;
-const INPUT = styled.input`
-  font-size: 14px;
-  margin-left: 40px;
-  border: 1px solid #e3e3e3;
-  color: #666;
+const AppWrapper = styled(Layout)`
+  height: 100%;
+  width: 100%;
+  padding-top: 50px;
 `;
 
-const Button = styled.button`
-
+const RightLayout = styled(Layout)`
+  padding: 24px;
 `;
 
-// Example HOC
-function withTheme(ThemedComponent) {
-  // function ThemeContextInjector(props) {
-  //   return (
-  //     <ThemeContext.Consumer>
-  //       {value => (
-  //         <ThemedComponent {...props} ref={props.forwardedRef} theme={value} />
-  //       )}
-  //     </ThemeContext.Consumer>
-  //   );
-  // }
-  function ThemeContextInjector(props) {
-    return (<ThemedComponent {...props} ref={props.forwardedRef} />);
-  }
+const LeftSilder = styled(Sider)`
+  width: 200;
+  background: #fff;
+  box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.12);
+  z-index: 500;
+  color: #4885ed;
+  display: flex;
+  flex-direction: column;
+  align-content: space-around;
+  margin-bottom: -20px;
+  overflow-y: auto;
+`;
+const WrapperContent = styled(Content)`
+  background: #fff;
+  padding: 24;
+  margin: 0;
+  min-height: 280px;
+`;
 
-  // Forward refs through to the inner, "themed" component:
-  return React.forwardRef((props, ref) => (
-    <ThemeContextInjector {...props} forwardedRef={ref} />
-  ));
+export const urlToList = (url) => {
+  const urllist = url.split('/').filter(i => i);
+  return urllist.map((urlItem, index) => `/${urllist.slice(0, index + 1).join('/')}`);
 }
-const ThemedButton = withTheme(Button);
+
+/**
+ *  type  单个或者数组 single list
+ *  name 标题
+ *  url 路径
+ *  icon 图标
+ */
+const URL = [ // eslint-disable-line
+  {
+    type: 'single',
+    name: 'Option 1',
+    url: '/dashboard/option',
+    icon: 'pie-chart',
+  },
+  {
+    type: 'list',
+    name: 'Option 2',
+    url: '/dashboard/part',
+    icon: 'user',
+    listUrl: [
+      {
+        name: 'one',
+        url: '/dashboard/part/one',
+      },
+      {
+        name: 'two',
+        url: '/dashboard/part/two',
+      },
+    ],
+  },
+  {
+    type: 'list',
+    name: 'Option 3',
+    url: '/dashboard/edit',
+    icon: 'user',
+    listUrl: [
+      {
+        name: 'one',
+        url: '/dashboard/edit/one',
+      },
+      {
+        name: 'two',
+        url: '/dashboard/edit/two',
+      },
+    ],
+  },
+  {
+    type: 'single',
+    name: 'Option 4',
+    url: '/dashboard/user',
+    icon: 'pie-chart',
+  },
+]
 
 /* eslint-disable react/prefer-stateless-function */
 export class Dashboard extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.divRef = React.createRef();
-    this.buttonRef = React.createRef();
+  /**
+   *  openKey 页面初始值，Item点击跳转之后改变
+   *  collapsed 侧边栏的开启与关闭
+   */
+  state = {
+    openKey: [],
+    collapsed: false,
   }
 
-  UNSAFE_componentWillMount() { // eslint-disable-line
-    console.log('UNSAFE_componentWillMount');
+  // Menud 点击
+  onHandleSelect = (openKey) => this.setState({ openKey });
+
+  // ITEM点击
+  onJump = (url, openKey = []) => {
+    this.props.history.push(url);
+    this.setState({ openKey })
   }
 
-  componentDidMount() {
-    console.log(this.divRef);
-    this.divRef.current.focus()
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) { // eslint-disable-line
-    console.log('UNSAFE_componentWillReceiveProps', nextProps);
-  }
+  // Get the currently selected menu
+  getSelectedMenuKeys = pathname => urlToList(pathname);
 
   render() {
-    const { actionLoginOut } = this.props;
+    const {
+      location: { pathname },
+    } = this.props;
+    const { openKey, collapsed } = this.state;
+    const selectedKeys = this.getSelectedMenuKeys(pathname);
+    const props = collapsed ? {} : { openKeys: openKey.length === 0 ? selectedKeys : openKey };
     return (
-      <div>
-        <Helmet><title>控制面板</title></Helmet>
-        <Content>
-          <P>1.ref</P>
-          <P1>1.1 React.createRef()</P1>
-          <P1>1.2 this.divRef.current</P1>
-          <P>2.forwardRef</P>
-          <P1>2.1 React.forwardRef()</P1>
-          <P>3.UNSAFE_</P>
-          <P1>3.1 ADD getDerivedStateFromProps()</P1>
-          <P1>3.2 ADD getSnapshotBeforeUpdate()</P1>
-          <P1>3.3 UNSAFE_componentWillMount</P1>
-          <P1>3.4 UNSAFE_componentWillReceiveProps</P1>
-          <P1>3.5 UNSAFE_componentWillUpdate</P1>
-        </Content>
-        <div onClick={actionLoginOut}>logout</div>
-        {/* <input type="text" ref={this.divRef} /> */}
-        <INPUT type="text" ref={this.divRef} />
-        <ThemedButton ref={this.buttonRef} onClick={actionLoginOut}>ClickME logout</ThemedButton>
-        <div>Dashboard</div>
-      </div>
+      <AppWrapper>
+        <Helmet>
+          <title>控制面板</title>
+        </Helmet>
+        <Header />
+        <Layout>
+          <LeftSilder
+            trigger={null}
+            collapsible
+            collapsed={collapsed} 
+          >
+            <Menu
+              key="Menu"
+              mode="inline"
+              selectedKeys={selectedKeys}
+              onOpenChange={this.onHandleSelect}
+              style={{ height: '100%', borderRight: 0 }}
+              {...props}
+            > 
+              <Menu.Item key="/dashboard/option" onClick={() => this.onJump('/dashboard/option')}>
+                <Icon type="pie-chart" />
+                <span>Option 1</span>
+              </Menu.Item>
+              <SubMenu
+                key="/dashboard/part"
+                title={<div style={{ display: 'flex', alignItems: 'center' }}><Icon type="setting" /><span>Option 2</span></div>}
+              >
+                <Menu.Item key="/dashboard/part/one" onClick={() => this.onJump('/dashboard/part/one')}>one</Menu.Item>
+                <Menu.Item key="/dashboard/part/two" onClick={() => this.onJump('/dashboard/part/two')}>two</Menu.Item>
+                <Menu.Item key="" onClick={() => this.onJump('/dashboard/part')}>404</Menu.Item>
+              </SubMenu>
+              <SubMenu
+                key="/dashboard/edit"
+                title={<div style={{ display: 'flex', alignItems: 'center' }}><Icon type="setting" /><span>Option 3</span></div>}
+              >
+                <Menu.Item key="/dashboard/edit/one" onClick={() => this.onJump('/dashboard/edit/one')}>one</Menu.Item>
+                <Menu.Item key="/dashboard/edit/two" onClick={() => this.onJump('/dashboard/edit/two')}>two</Menu.Item>
+              </SubMenu>
+              <Menu.Item key="/dashboard/user" onClick={() => this.onJump('/dashboard/user')}>
+                <Icon type="pie-chart" />
+                <span>Option 4</span>
+              </Menu.Item>
+            </Menu>
+          </LeftSilder>
+          <RightLayout>
+            <WrapperContent>
+              
+              <Switch>
+                <Route
+                  exact
+                  path={this.props.match.url}
+                  render={() => <Redirect to={`${this.props.match.path}/option`} />}
+                />
+                <Route
+                  path={`${this.props.match.path}/option`}
+                  component={() => <div>option</div>}
+                />
+                <Route
+                  path={`${this.props.match.path}/part/one`}
+                  component={() => <div>One</div>}
+                />
+                <Route
+                  path={`${this.props.match.path}/part/two`}
+                  component={() => <div>Two</div>}
+                />
+                <Route
+                  path={`${this.props.match.path}/edit/one`}
+                  component={() => <div>edit One</div>}
+                />
+                <Route
+                  path={`${this.props.match.path}/edit/two`}
+                  component={() => <div>edit Two</div>}
+                />
+                <Route
+                  path={`${this.props.match.path}/user`}
+                  component={() => <div>user</div>}
+                />
+                <Route render={() => <Redirect to="/404" />} />
+              </Switch>
+            </WrapperContent>
+          </RightLayout>
+        </Layout>
+      </AppWrapper>
     );
   }
 }
 
 Dashboard.propTypes = {
-  actionLoginOut: PropTypes.func.isRequired,
+  match: PropTypes.object,
+  history: PropTypes.object,
+  location: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
   dashboard: makeSelectDashboard(),
 });
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actionLoginOut: () => dispatch(loginOut()),
-  };
+function mapDispatchToProps(dispatch) {  // eslint-disable-line
+  return {};
 }
 
 const withConnect = connect(

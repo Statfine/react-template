@@ -16,6 +16,9 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
+import { DatePicker, Button, Upload, Icon, message, Modal } from 'antd';
+
+import UploadImg from 'components/UploadImg';
 
 import { makeSelectLogined, makeSelectUserInfo } from '../App/selectors';
 import { loginOut } from '../App/actions';
@@ -35,6 +38,12 @@ const P1 = styled.p`
 
 /* eslint-disable react/prefer-stateless-function */
 class HomePage extends React.PureComponent {
+  state = {
+    date: '',
+    imageUrl: '',
+    previewVisible: false,
+    fileList: [],
+  }
 
   componentWillMount() {
     console.log('componentWillMount');
@@ -49,8 +58,47 @@ class HomePage extends React.PureComponent {
     if (!logined) history.push('/login');
   };
 
+  handleChange(date) {
+    this.setState({ date });
+  }
+
+  beforeUpload = (file) => {
+    const isJPG = file.type === 'image/jpeg';
+    if (!isJPG) {
+      message.error('You can only upload JPG file!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      message.error('Image must smaller than 2MB!');
+    }
+    console.log(file);
+    return isJPG && isLt2M;
+  }
+
+  handleUpload = (file) => {
+    console.log('file', file);
+  }
+  
+  handleChange = (info) => {
+    console.log('info', info);
+  }
+
+  handleDelete = (obj) => {
+    alert('delete', obj);
+    console.log(obj);
+  }
+
+  handleFileChange = (list) => this.setState({ fileList: list });
+
   render() {
     const { logined, actionLoginOut, userInfo } = this.props;
+    const { imageUrl, previewVisible, fileList } = this.state;
+    const uploadButton = (
+      <div>
+        <Icon type={this.state.loading ? 'loading' : 'plus'} />
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    );
     return (
       <div>
         <Helmet>
@@ -69,6 +117,27 @@ class HomePage extends React.PureComponent {
           <P1>2.1 fetchUserInfoWatcher内部判断是否获取用户信息</P1>
           <P1>2.2 tokenSagaWatcher 判断是否刷新token</P1>
         </Content>
+        <div style={{ marginLeft: '300px' }}><DatePicker onChange={value => this.handleChange(value)} /></div>
+        <Button type="primary">Primary</Button>
+        <Upload
+          name="avatar"
+          listType="picture-card"
+          className="avatar-uploader"
+          showUploadList={false}
+          customRequest={this.handleUpload}
+          beforeUpload={this.beforeUpload}
+          onChange={this.handleChange}
+        >
+          {imageUrl ? <img src={imageUrl} alt="avatar" /> : uploadButton}
+        </Upload>
+        <Modal visible={previewVisible} footer={null} onCancel={() => this.setState({ previewVisible: false })}>
+          <img alt="example" style={{ width: '100%' }} src="https://cloud-clip-img.oss-cn-hangzhou.aliyuncs.com/snapshot/a6e8b594-900f-42bf-b02a-9856d2745a3a-2136.png" />
+        </Modal>
+        <UploadImg
+          handleDelete={this.handleDelete}
+          handleChange={this.handleFileChange}
+          fileList={fileList}
+        />
       </div>
     );
   }

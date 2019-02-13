@@ -14,7 +14,13 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router/immutable';
 import history from 'utils/history';
-import 'sanitize.css/sanitize.css';
+// import 'sanitize.css/sanitize.css';
+
+import { LocaleProvider } from 'antd';
+import zhCN from 'antd/lib/locale-provider/zh_CN';
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+import 'antd/dist/antd.less';
 
 // Import root app
 import App from 'containers/App';
@@ -34,6 +40,8 @@ import configureStore from './configureStore';
 // Import i18n messages
 import { translationMessages } from './i18n';
 
+moment.locale('zh-cn');
+
 // Create redux store with history
 const initialState = {};
 const store = configureStore(initialState, history);
@@ -45,7 +53,7 @@ const render = messages => {
     <Provider store={store}>
       <LanguageProvider messages={messages}>
         <ConnectedRouter history={history}>
-          <App />
+          <LocaleProvider locale={zhCN}><App /></LocaleProvider>
         </ConnectedRouter>
       </LanguageProvider>
     </Provider>,
