@@ -22,6 +22,7 @@ import UploadImg from 'components/UploadImg';
 
 import { makeSelectLogined, makeSelectUserInfo } from '../App/selectors';
 import { loginOut } from '../App/actions';
+import { CURRENT_ENV, CURRENT_QA } from '../../common/constants';
 
 const Content = styled.div`
   padding: 40px;
@@ -92,6 +93,7 @@ class HomePage extends React.PureComponent {
 
   render() {
     const { logined, actionLoginOut, userInfo } = this.props;
+<<<<<<< HEAD
     const { imageUrl, previewVisible, fileList } = this.state;
     const uploadButton = (
       <div>
@@ -99,11 +101,16 @@ class HomePage extends React.PureComponent {
         <div className="ant-upload-text">Upload</div>
       </div>
     );
+=======
+    console.log(CURRENT_QA);
+>>>>>>> master
     return (
       <div>
         <Helmet>
           <title>首页</title>
         </Helmet>
+        {CURRENT_ENV}
+        <div>{CURRENT_QA}</div>
         {logined ?
           (<div onClick={actionLoginOut}>点击退出用户:{userInfo.user.clip_id}</div>) :
           (<div onClick={this.handleJumpLogin}>点击去登陆</div>)
