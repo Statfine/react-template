@@ -18,12 +18,13 @@ import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 import { DAEMON } from 'utils/constants';
 
-import HomePage from 'containers/HomePage/Loadable';
+// import HomePage from 'containers/HomePage/Loadable';
 import Login from 'containers/Login/Loadable';
 import Dashborad from 'containers/Dashboard/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import LoadingIndicator from 'components/LoadingIndicator';
 import HostPage from '../HostPage/Loadable';
+import HooksPage from '../HooksPage/Loadable';
 
 import saga from './saga';
 import reducer from './reducer';
@@ -59,11 +60,12 @@ class App extends React.Component {
     return (
       <div>
         <Switch>
-          <Route exact path="/" component={HomePage} />
+          <Route exact path="/" component={HooksPage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/dashborad" component={DashboardPage} />
           <Route path='/loading' component={LoadingIndicator} />
           <Route path='/host' component={HostPage} />
+          <Route path='/hooks' component={HooksPage} />
           <Route component={NotFoundPage} />
         </Switch>
         <GlobalStyle />

@@ -135,8 +135,7 @@ Elint
 >  server/middlewares/frontendMiddleware.js   编译环境判断
 >  babel.config.js                            production 配置
 >  internals/webpack/webpack.pro.babel.js     正式环境编译 mode nodeEnv 
-```
-```json
+json
 {
   "process.env": {
     "NODE_ENV": "JSON.stringify(process.env.NODE_ENV)",
@@ -145,5 +144,11 @@ Elint
 }
 npm run build
 npm run build:qa
+```
+
+``` bash
+# dev-hooks分支
+"react": "16.8.4",
+"react-dom": "16.8.4",
 ```
 
