@@ -25,6 +25,7 @@ import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import LoadingIndicator from 'components/LoadingIndicator';
 import HostPage from '../HostPage/Loadable';
 import HooksPage from '../HooksPage/Loadable';
+import LifePage from '../Lifecycle';
 
 import saga from './saga';
 import reducer from './reducer';
@@ -66,6 +67,7 @@ class App extends React.Component {
           <Route path='/loading' component={LoadingIndicator} />
           <Route path='/host' component={HostPage} />
           <Route path='/hooks' component={HooksPage} />
+          <Route path='/life' component={LifePage} />
           <Route component={NotFoundPage} />
         </Switch>
         <GlobalStyle />

@@ -1,7 +1,11 @@
 import React from 'react';
 
+// eslint-disable-next-line no-unused-vars
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 export default class Lifecycle extends React.PureComponent {
-  state = {};
+  state = {
+    name: 'hello',
+  };
 
   componentDidMount() {
     // 执行初始请求
@@ -29,5 +33,29 @@ export default class Lifecycle extends React.PureComponent {
     // if (snapshot === true) {
     //   this.fetchList();
     // }
+  }
+
+  handleChange = () => {
+    setTimeout(() =>  this.setState({ name: '3' }, () => console.log(3)), 0);
+    this.setState({ name: '1' }, () => console.log(1));
+    this.setState({ name: '2' }, () => console.log(2));
+    // setTimeout(() =>  this.setState({ name: '3' }, () => console.log(3)), 0);
+  }
+
+  async handleChangeAsync() {
+    await this.setState({ name: '1' }, () => console.log(1));
+    // await delay(1000)
+    await this.setState({ name: '2' }, () => console.log(2));
+  }
+
+  render() {
+    console.log('Lifecycle render');
+    const { name } = this.state;
+    return(
+      <>
+        <p>{name}</p>
+        <p onClick={() => this.handleChange()}>click</p>
+      </>
+    )
   }
 }
